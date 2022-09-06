@@ -1,4 +1,4 @@
-Shader "Unlit/Stencil"
+Shader "Unlit/StencilMask"
 {
     Properties
     {
