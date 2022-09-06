@@ -1,16 +1,11 @@
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
 
-public class EntryPoint : MonoBehaviourWrapper
+public class EntryPoint : MonoBehaviour
 {
-    [SerializeField] private DraggingOnSurfaceObject _portal;
-    [SerializeField] private ARRaycastManager _arRaycastManager;
+    [SerializeField] private UI _ui;
     
     private void Awake()
     {
-        SetDependencies(new object[]
-        {
-            new DraggingOnSurface(_portal, _arRaycastManager)
-        });
+        _ui.Init();
     }
 }

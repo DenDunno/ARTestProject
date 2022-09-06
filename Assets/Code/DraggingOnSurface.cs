@@ -1,22 +1,16 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-public class DraggingOnSurface : IUpdate
+public class DraggingOnSurface : MonoBehaviour
 {
-    private readonly DraggingOnSurfaceObject _draggingOnSurfaceObject;
-    private readonly ARRaycastManager _arRaycastManager;
+    [SerializeField] private ARRaycastManager _arRaycastManager;
     private readonly List<ARRaycastHit> _arHits = new List<ARRaycastHit>();
     private const float _draggingSpeed = 2f;
-    
-    public DraggingOnSurface(DraggingOnSurfaceObject draggingOnSurfaceObject, ARRaycastManager arRaycastManager)
-    {
-        _draggingOnSurfaceObject = draggingOnSurfaceObject;
-        _arRaycastManager = arRaycastManager;
-    }
 
-    void IUpdate.Update()
+    private void Update()
     {
         if (CheckHit())
         {
@@ -27,12 +21,12 @@ public class DraggingOnSurface : IUpdate
     private bool CheckHit()
     {
         return Input.touchCount > 0 &&
+               EventSystem.current.IsPointerOverGameObject() == false && 
                _arRaycastManager.Raycast(Input.GetTouch(0).position, _arHits, TrackableType.Planes);
     }
 
     private void MoveObject(Vector3 targetPosition)
     {
-        _draggingOnSurfaceObject.transform.position = Vector3.Lerp(_draggingOnSurfaceObject.transform.position,
-            targetPosition, _draggingSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, _draggingSpeed * Time.deltaTime);
     }
 }

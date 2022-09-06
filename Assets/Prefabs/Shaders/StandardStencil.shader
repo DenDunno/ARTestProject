@@ -56,7 +56,7 @@ Shader "StandardStencil"
 
         Stencil
         {
-            Ref 1
+            Ref 0
             Comp equal
         }
 
